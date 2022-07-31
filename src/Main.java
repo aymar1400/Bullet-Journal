@@ -1,53 +1,64 @@
 import java.util.*;
 public class Main {
+
+    public static ArrayList<DailyLog> dLogArray = new ArrayList<DailyLog>();
+
     public static void main(String[] args) {
-        DailyLog dLog = new DailyLog();
+        DailyLog dLog = new DailyLog("07/30/2022");
 
 
-        //System.out.println("c: All Numbers Are the Same");
-        //System.out.println("d: Sum Between Two Integers");
-        //System.out.println("e: Repeat the String");
-        //System.out.println("f: It is Palindrome");
-        //System.out.println("?: Display");
 
         String choice = null;
         Scanner scan = new Scanner(System.in);
         do {
             System.out.println("Command Options: ");
-            System.out.println("a: Add Task to List");
-            System.out.println("b: Print DLOG");
+            System.out.println("a: Create Daily Log");
+            System.out.println("b: Add to Log");
+            System.out.println("c: Print Logs");
             System.out.println("q: Quit");
             System.out.print("Enter a command: ");
             choice = scan.nextLine();
             switch (choice) {
                 case "a":
-                    System.out.println("Enter icon: ");
-                    String icon = scan.nextLine();
-                    System.out.println("Enter task: ");
-                    String taskDesc = scan.nextLine();
-                    Task t1 = new Task(icon, taskDesc);
-                    dLog.addToList(t1);
+                    System.out.println("Enter date: ");
+                    String dateLabel = scan.nextLine();
+                    createDailyLog(dateLabel);
+
                     break;
                 case "b":
-                    System.out.println("Date: " + dLog.getMonth() + "/" + dLog.getMonthDay() + "/" + dLog.getYear());
-                    System.out.println(dLog.getTaskFromList());
+                    System.out.println("Enter date for log: ");
+                    String dateLabel2 = scan.nextLine();
+                    System.out.println("Enter icon: ");
+                    String iconLabel = scan.nextLine();
+                    System.out.println("Enter task: ");
+                    String taskLabel = scan.nextLine();
+                    addTaskToLog(dateLabel2, iconLabel, taskLabel);
+                    break;
+                case "c":
+                    for(int i = 0; i < dLogArray.size(); i++) {
+                        System.out.println(dLogArray.get(i).toString());
+                    }
                     break;
             } // end of switch
         } while (!choice.equals("q")); // end of loop
-        /*
-        Task t1 = new Task("[]", "clean shoes");
-        Task t2 = new Task("o", "sailors birthday");
-        Task t3 = new Task("-", "data structures");
 
-        dLog.addToList(t1);
-        dLog.addToList(t2);
-        dLog.addToList(t3);
-        Date d = new Date();
-        Calendar c = Calendar.getInstance();
-        System.out.println(d.getDay());
-        System.out.println("Date: " + dLog.getMonth() + "/" + dLog.getMonthDay() + "/" + dLog.getYear());
-        System.out.println(dLog.getTaskFromList());
 
-         */
+
     }
+
+    public static void createDailyLog(String date) {
+        DailyLog log = new DailyLog(date);
+        dLogArray.add(log);
+    }
+
+    public static void addTaskToLog(String inputDate, String icon, String desc) {
+        Task t = new Task(icon, desc);
+        for(int i = 0; i < dLogArray.size(); i++) {
+            if (dLogArray.get(i).date.equals(inputDate)) {
+
+                dLogArray.get(i).addToList(t);
+            }
+        }
+    }
+
 }
