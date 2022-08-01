@@ -11,9 +11,17 @@ public class Task {
     String type;
     String taskDescription;
 
-    public Task(String type, String desc) {
-        this.type = type;
+    public Task(String icon, String desc) {
+        type = icon;
         taskDescription = desc;
+    }
+
+    public void changeIcon(String i) {
+        type = i;
+    }
+
+    public void changeTask(String t) {
+        taskDescription = t;
     }
 
 

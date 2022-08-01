@@ -3,7 +3,7 @@ import java.util.*;
 
 public class DailyLog {
 
-    ArrayList taskList;
+    ArrayList<Task> taskList;
     String date;
 
 
@@ -14,7 +14,14 @@ public class DailyLog {
 
     }
 
+    public ArrayList getTaskList() { return taskList; }
 
+    public Task getTaskInList(int index) {
+        return taskList.get(index);
+    }
+    public String getDate() { return date; }
+
+    public void setDate(String input) { date = input; }
 
     public void addToList(Task task) {
         taskList.add(task);
