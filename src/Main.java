@@ -29,7 +29,7 @@ public class Main {
                     createLog(dateLabel, iconLabel, taskLabel);
                     break;
                 case "b":
-                    printLog(dLog);
+                    System.out.println(printLog());
                     break;
                 case "c":
                     System.out.println("1) Change Date");
@@ -80,14 +80,17 @@ public class Main {
         dLog.addToList(t);
     }
 
-    public static void printLog(DailyLog log) {
-        String result;
-        System.out.println("-----------------------------------------------------------");
-        System.out.println("Date: " + log.getDate());
-        for (int i = 0; i < log.getTaskList().size(); i++) {
-            System.out.println(log.getTaskList().get(i) + " (" + (i+1) + ")");
+    public static String printLog() {
+        String result = "";
+        String mod1 = "-----------------------------------------------------------";
+        String dateVar = "Date: " + dLog.getDate();
+
+        for (int i = 0; i < dLog.getTaskList().size(); i++) {
+            result += dLog.getTaskList().get(i) + " (" + (i+1) + ")" + "\n";
         }
-        System.out.println("-----------------------------------------------------------");
+
+        String outResult = mod1 + "\n" + dateVar + "\n" + result + mod1;
+        return outResult;
     }
 
 
