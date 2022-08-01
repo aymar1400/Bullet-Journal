@@ -1,3 +1,8 @@
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 public class Main {
 
@@ -15,7 +20,7 @@ public class Main {
             System.out.println("a: Add to Daily Log");
             System.out.println("b: Print Daily Log");
             System.out.println("c: Change date, icon, task");
-            System.out.println("q: Quit");
+            System.out.println("q: Quit and save to text");
             System.out.print("Enter a command: ");
             choice = scan.nextLine();
             switch (choice) {
@@ -42,6 +47,18 @@ public class Main {
             } // end of switch
         } while (!choice.equals("q")); // end of loop
 
+        System.out.println("Enter a filename: ");
+        String filename = scan.nextLine();
+        filename = filename + ".txt";
+
+        Path path = Paths.get(filename);
+        String contents = printLog();
+
+        try {
+            Files.writeString(path, contents, StandardCharsets.UTF_8);
+        } catch (IOException ex) {
+
+        }
 
     }
 
