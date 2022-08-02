@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.*;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -20,7 +23,9 @@ public class Main {
             System.out.println("a: Add to Daily Log");
             System.out.println("b: Print Daily Log");
             System.out.println("c: Change date, icon, task");
-            System.out.println("q: Quit and save to text");
+            System.out.println("d: Write to File");
+            System.out.println("e: Read to File");
+            System.out.println("q: Quit");
             System.out.print("Enter a command: ");
             choice = scan.nextLine();
             switch (choice) {
@@ -34,7 +39,7 @@ public class Main {
                     createLog(dateLabel, iconLabel, taskLabel);
                     break;
                 case "b":
-                    System.out.println(printLog());
+                    System.out.println(dLog);
                     break;
                 case "c":
                     System.out.println("1) Change Date");
@@ -43,25 +48,65 @@ public class Main {
                     System.out.println("Enter an option: ");
                     int opt = scan.nextInt();
                     changeInLog(opt);
-
+                    break;
+                case "d":
+                    writeFile();
+                    System.exit(0);
+                    break;
+                case "e":
+                    readFile();
+                    break;
             } // end of switch
         } while (!choice.equals("q")); // end of loop
 
-        System.out.println("Enter a filename: ");
-        String filename = scan.nextLine();
-        filename = filename + ".txt";
-
-        Path path = Paths.get(filename);
-        String contents = printLog();
-
-        try {
-            Files.writeString(path, contents, StandardCharsets.UTF_8);
-        } catch (IOException ex) {
-
-        }
 
     }
 
+    public static void readFile() {
+        try {
+
+
+            FileInputStream fi = new FileInputStream(new File("myObjects.txt"));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            // Read objects
+            DailyLog pr1 = (DailyLog) oi.readObject();
+
+
+            System.out.println(pr1.toString());
+
+            oi.close();
+            fi.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeFile() {
+        try {
+            FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            // Write objects to file
+            o.writeObject(dLog);
+
+            o.close();
+            f.close();
+
+
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream" + e);
+        }
+    }
     public static void changeInLog(int option) {
         Scanner s2 = new Scanner(System.in);
         if (option == 1) {
